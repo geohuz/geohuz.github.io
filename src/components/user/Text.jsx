@@ -282,6 +282,7 @@ export const TextDefaultProps = {
 };
 
 Text.craft = {
+  displayName: 'Text',
   props: {...TextDefaultProps, ...defaultProps},
   related: {
     settings: TextSettings,

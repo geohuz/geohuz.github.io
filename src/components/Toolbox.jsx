@@ -41,7 +41,7 @@ export const Toolbox = () => {
               connectors.create(
                 ref,
                  <Element id="Container" canvas is={Container} custom={{displayName: "hContainer"}}>
-                  {/* 必须带上text, 否则后续无法拖入 */}
+                  {/* must have a text component, otherwise can't drag in */}
                   <Text text="行容器" />
                  </Element>
               )
@@ -58,7 +58,7 @@ export const Toolbox = () => {
               connectors.create(
                 ref,
                  <Element id="Container" canvas is={Container} custom={{direction: "column", displayName: "vContainer"}}>
-                  {/* 必须带上text, 否则后续无法拖入 */}
+                  {/* must have a text component, otherwise can't drag in */}
                   <Text text="列容器" />
                  </Element>
               )

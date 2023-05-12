@@ -197,7 +197,7 @@ export const Resizer = ({ propKey, children, ...props }) => {
   }, [updateInternalDimensionsWithOriginal]);
 
 
-  // 根据字体大小调整Resizer包裹高度. 以确保最后一行不被cutoff
+  // adjust resizer height, ensuring the last line not being cutoff
   // useEffect(()=> {
   //   if (!isNaN(parseInt(nodeDimensions.current.height))) {
   //     let calc = parseInt(nodeDimensions.current.height) / textAreaFontSize.current / 1.5
@@ -240,8 +240,6 @@ export const Resizer = ({ propKey, children, ...props }) => {
           border-Color: ${theme.palette.primary.main};
         `}
       `}
-      // snap的纵向值, 以确保文字不被cutoff
-      // grid = {[1, isTextNode? globalLineHeight * textAreaFontSize.current : 1]}
       ref={(ref) => {
         if (ref) {
           resizable.current = ref;
@@ -319,3 +317,6 @@ Resizer.craft = {
     }
   }
 }
+
+// snap的纵向值, 以确保文字不被cutoff
+// grid = {[1, isTextNode? globalLineHeight * textAreaFontSize.current : 1]}

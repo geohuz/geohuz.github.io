@@ -91,7 +91,7 @@ const RenderNode = ({ render }) => {
   const currentRef = useRef();
 
   useEffect(() => {
-    // 加虚线框
+    // adding dot line
     if (dom) {
       if (isActive!==undefined && isHover) dom.classList.add('component-selected')
       else dom.classList.remove('component-selected');
@@ -134,7 +134,6 @@ const RenderNode = ({ render }) => {
 
   return (
     <>
-      {/* 如果没有active则会错误的显示parent */}
       { !richTextMode && isActive || (isActive===false && isHover) 
         ? ReactDOM.createPortal(
             <IndicatorDiv
@@ -164,16 +163,6 @@ const RenderNode = ({ render }) => {
                   <Move />
                 </Btn>
               ) : null}
-              {/* {id !== ROOT_NODE && ( */}
-              {/*   <Btn */}
-              {/*     className="mr-1 cursor-pointer" */}
-              {/*     onClick={() => { */}
-              {/*       actions.selectNode(parent); */}
-              {/*     }} */}
-              {/*   > */}
-              {/*     <ArrowUp /> */}
-              {/*   </Btn> */}
-              {/* )} */}
               {deletable ? (
                 <Btn
                   className="mr-1 cursor-pointer"
@@ -204,6 +193,5 @@ const RenderNode = ({ render }) => {
 };
 
 export default RenderNode
-// export default observer(RenderNode)
-{/* appStore.textAreaOverflow &&  */}
 
+ 

@@ -1,5 +1,5 @@
 /* purgecss start ignore */
-@import url('./rendernode.css');
+/* @import url('./rendernode.css'); */
 @tailwind base;
 @tailwind components;
 html,

@@ -144,7 +144,7 @@ const RichEditor = forwardRef((props, ref) => {
     {
      ref: refEditable,
      onResize: ({height}) => {
-        // 只在可写方式下探测overflow
+        // detect overflow only in writable mode
         if (!props.readOnly) {
           let resizerHeight = parseInt(nodeProps.height)
           if (!isNaN(resizerHeight)) {
@@ -162,8 +162,6 @@ const RichEditor = forwardRef((props, ref) => {
      },
     }
   )
-
-  console.log("overflow: ",nodeProps.overflow_y)
 
   // for simpleEditor to change the content
   useImperativeHandle(ref, ()=> ({
@@ -196,7 +194,7 @@ const RichEditor = forwardRef((props, ref) => {
         </Toolbar>}
       <div
         ref={refEditable}
-        // 在只读并且简单编辑器模式模式下处理cutoff
+        // only deal with cutoff in readonly and simpleEditorMode 
         css={css`${props.readOnly && props.simpleMode &&
           `
           height: 100%;
@@ -212,7 +210,7 @@ const RichEditor = forwardRef((props, ref) => {
         }
         renderElement={renderElement}
         renderLeaf={renderLeaf}
-        placeholder="输入文字"
+        placeholder="type something..."
         autoFocus
         onBlur={()=> {
           Transforms.select(editor, {

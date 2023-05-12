@@ -30,10 +30,8 @@ export default function App() {
         }}
         onRender = { RenderNode }
       >
-        {/* 顶部控制栏 */}
         <Topbar /> 
         <Viewport>
-          {/* 节点编辑区域 */}
           <Frame>
             <Element
               canvas
@@ -63,7 +61,6 @@ export default function App() {
             </Element>
           </Frame>
         </Viewport>
-        {/* 右边控制栏 */}
         <Paper css={css`
             padding: 0;
             background: rgb(252, 253, 253);
