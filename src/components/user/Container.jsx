@@ -48,6 +48,7 @@ export const Container = ({children}) => {
 };
 
 Container.craft = {
+  display: "Container",
   rules: {
     // canMoveIn: (incomingNodes, self, helper) => {
     //   // incomingNodes.every(node=>{
