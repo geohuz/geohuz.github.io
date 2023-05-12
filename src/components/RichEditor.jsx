@@ -144,22 +144,26 @@ const RichEditor = forwardRef((props, ref) => {
     {
      ref: refEditable,
      onResize: ({height}) => {
-        let resizerHeight = parseInt(nodeProps.height)
-        if (!isNaN(resizerHeight)) {
-          if (height - resizerHeight > 0)  {
-            setProp(props=> {
-              props.overflow_y = true
-            })
-          } else {
-            setProp(props=> {
-              props.overflow_y = false
-            })
+        // 只在可写方式下探测overflow
+        if (!props.readOnly) {
+          let resizerHeight = parseInt(nodeProps.height)
+          if (!isNaN(resizerHeight)) {
+            if (height - resizerHeight > 0)  {
+              setProp(props=> {
+                props.overflow_y = true
+              })
+            } else {
+              setProp(props=> {
+                props.overflow_y = false
+              })
+            }
           }
-
         }
      },
     }
   )
+
+  console.log("overflow: ",nodeProps.overflow_y)
 
   // for simpleEditor to change the content
   useImperativeHandle(ref, ()=> ({
@@ -192,8 +196,13 @@ const RichEditor = forwardRef((props, ref) => {
         </Toolbar>}
       <div
         ref={refEditable}
-        css={css`
-          overflow-y: auto;
+        // 在只读并且简单编辑器模式模式下处理cutoff
+        css={css`${props.readOnly && props.simpleMode &&
+          `
+          height: 100%;
+          overflow: hidden;
+          column-width: ${nodeProps.width}
+          `}
         `}
       >
       <Editable

@@ -58,12 +58,14 @@ export const Text = ({ text, fontSize, textAlign, ...props }) => {
     richTextMode,
     presentationMode,
     actions: { setProp },
+    resizerWidth,
   } = useNode(node=> {
     return {
       richTextMode: node.data.props.richTextMode,
       presentationMode: node.data.props.presentationMode,
       selected: node.events.selected,
       overflow_y: node.data.props.overflow_y,
+      resizerWidth: node.data.props.width
     }
   })
 
@@ -157,12 +159,13 @@ export const Text = ({ text, fontSize, textAlign, ...props }) => {
         >
           <RichEditor
             ref={simpleEditorRef}
+            simpleMode={true}
             withToolbar={false}
             initialValue={simpleEditorData}
             onChange={editorContentChangeHanlder}
             editorStyle={css`
               font-size: ${fontSize}px;
-              text-align: ${textAlign}
+              text-align: ${textAlign};
             `}
             readOnly={!isEditable}
             onBlur={()=> {
@@ -245,6 +248,7 @@ function PopupEditor({open, content, onChange, applyChange, setProp, presentatio
       >
         {open &&
           <RichEditor 
+            simpleMode={false}
             withToolbar={!presentationMode}
             initialValue={content} 
             onChange={onChange}
@@ -284,3 +288,7 @@ Text.craft = {
   },
 };
 
+
+        // `${!isEditable ||!globalEnabled?
+        //   `column-width: ${resizerWidth};`
+        //   : `width: 100%;`}
