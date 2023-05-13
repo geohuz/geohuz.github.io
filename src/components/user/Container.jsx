@@ -29,7 +29,7 @@ export const Container = ({children}) => {
  
   return (
     <div
-      ref={dom => connect(drag(dom))}
+      ref={dom => connect(dom)}
       className={isBeingDraggedOver ? "droparea" : ""}
       datatooltip={name}
       css={css`
@@ -50,6 +50,7 @@ export const Container = ({children}) => {
 Container.craft = {
   display: "Container",
   rules: {
+    canDrag: () => true
     // canMoveIn: (incomingNodes, self, helper) => {
     //   // incomingNodes.every(node=>{
     //   //   return (node.data.custom.direction===helper(self.id).get().data.custom.direction)

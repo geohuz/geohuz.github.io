@@ -42,14 +42,6 @@ const defaultProps = {
 
 export const Text = ({ text, fontSize, textAlign, ...props }) => {
   const [isEditable, setEditable] = useState(false)
-  const [simpleEditorData, setSimpleEditorData] = useState(
-    [{
-      type: 'paragraph',
-      children: [
-        {text: "输入文字"},
-      ]
-    }]
-  )
 
   const {
     id: id,
@@ -58,6 +50,7 @@ export const Text = ({ text, fontSize, textAlign, ...props }) => {
     richTextMode,
     presentationMode,
     actions: { setProp },
+    connectors: { connect, drag },
     resizerWidth,
   } = useNode(node=> {
     return {
@@ -85,7 +78,7 @@ export const Text = ({ text, fontSize, textAlign, ...props }) => {
   } = props
 
   // 必须带上state调用， 否则报错, 因为这是有次序的
-  const { globalEnabled, actions, isActive} = useEditor((state, query) => {
+  const { globalEnabled, actions, isActive, query: {node}} = useEditor((state, query) => {
     let isActive
     let selectedId = query.getEvent('selected').last()
     if (selectedId===id) {
@@ -98,13 +91,15 @@ export const Text = ({ text, fontSize, textAlign, ...props }) => {
   })
 
   function editorContentChangeHanlder(value) {
-    setSimpleEditorData(value)
+    setProp((props=>props.text = value), 500)
   }
 
   function applyChange () {
-    simpleEditorRef.current.applyContent(simpleEditorData)
-    if (simpleEditorData[0].children) {
-      if (simpleEditorData[0].children[0].text==="") {
+    simpleEditorRef.current.applyContent(text)
+    setProp((props=>props.text = text), 500)
+    
+    if (text[0].children) {
+      if (text[0].children[0].text==="") {
         actions.delete(id)
       }
     }
@@ -138,6 +133,8 @@ export const Text = ({ text, fontSize, textAlign, ...props }) => {
       }}
     >
       <div
+        // ref={(ref) => connect(drag(ref))}   drag就会导致text区域trigger drag, 并导致选择文本很麻烦
+        ref={connect}  // 关闭drag就好了
         onClick={()=>selected && setEditable(true)}
         css={css`
           width: 100%;
@@ -161,7 +158,8 @@ export const Text = ({ text, fontSize, textAlign, ...props }) => {
             ref={simpleEditorRef}
             simpleMode={true}
             withToolbar={false}
-            initialValue={simpleEditorData}
+            // initialValue={simpleEditorData}
+            initialValue={text}
             onChange={editorContentChangeHanlder}
             editorStyle={css`
               font-size: ${fontSize}px;
@@ -169,8 +167,8 @@ export const Text = ({ text, fontSize, textAlign, ...props }) => {
             `}
             readOnly={!isEditable}
             onBlur={()=> {
-              if (simpleEditorData[0].children) {
-                if (simpleEditorData[0].children[0].text==="") {
+              if (text[0].children) {
+                if (text[0].children[0].text==="") {
                   actions.delete(id)
                 }
               }
@@ -182,7 +180,7 @@ export const Text = ({ text, fontSize, textAlign, ...props }) => {
           <PopupEditor 
             setProp={setProp}
             open={richTextMode || presentationMode} 
-            content={simpleEditorData}
+            content={text}
             onChange={editorContentChangeHanlder}
             applyChange={applyChange}
             presentationMode={presentationMode}

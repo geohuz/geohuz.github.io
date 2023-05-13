@@ -11,6 +11,7 @@ import { Text } from './components/user/Text';
 import { css } from '@emotion/react';
 import RenderNode  from './components/editor/RenderNode'
 import { Viewport } from './components/editor/ViewPort' 
+import {genSlateContent} from './utils'
 import './App.css'
 
 export default function App() {
@@ -46,7 +47,7 @@ export default function App() {
                 custom={{displayName: "hContainer"}}
                 // padding={['0', '20', '0', '20']}
               >
-                <Text text={'行容器'} /> 
+                <Text text={genSlateContent('输入文本')} /> 
                 <Element
                   canvas
                   is={Container}

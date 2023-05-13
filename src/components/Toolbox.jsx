@@ -10,6 +10,7 @@ import React from 'react';
 import { Container } from './user/Container';
 import { Text } from './user/Text';
 import { ImageBox} from './user/ImageBox'
+import {genSlateContent} from '../utils'
 
 export const Toolbox = () => {
   const { connectors } = useEditor();
@@ -28,7 +29,7 @@ export const Toolbox = () => {
         </Box>
         <Grid container direction="column" item>
           <MaterialButton
-            ref={(ref) => connectors.create(ref, <Text text="文本" />)}
+            ref={(ref) => connectors.create(ref, <Text text={genSlateContent("文本")} />)}
             variant="contained"
             data-cy="toolbox-text"
           >
@@ -42,7 +43,7 @@ export const Toolbox = () => {
                 ref,
                  <Element id="Container" canvas is={Container} custom={{displayName: "hContainer"}}>
                   {/* must have a text component, otherwise can't drag in */}
-                  <Text text="行容器" />
+                  <Text text={genSlateContent("行容器")} />
                  </Element>
               )
             }
@@ -59,7 +60,7 @@ export const Toolbox = () => {
                 ref,
                  <Element id="Container" canvas is={Container} custom={{direction: "column", displayName: "vContainer"}}>
                   {/* must have a text component, otherwise can't drag in */}
-                  <Text text="列容器" />
+                  <Text text={genSlateContent("列容器")} />
                  </Element>
               )
             }

@@ -167,7 +167,6 @@ const RichEditor = forwardRef((props, ref) => {
   useImperativeHandle(ref, ()=> ({
     applyContent(data) {
       resetNodes(editor, {nodes: data} )
-      // editor.onChange()
     }
   }))
 
